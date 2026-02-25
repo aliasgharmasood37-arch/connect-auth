@@ -6,7 +6,7 @@ export async function GET() {
   url.searchParams.set("client_id", process.env.INSTAGRAM_APP_ID!);
   url.searchParams.set(
     "redirect_uri",
-    `${process.env.BASE_URL}/auth/callback`
+    `${process.env.BASE_URL}/api/auth/callback`
   );
   url.searchParams.set(
     "scope",
@@ -16,4 +16,4 @@ export async function GET() {
   url.searchParams.set("force_reauth", "true");
 
   return NextResponse.redirect(url.toString());
-}
+} //done
