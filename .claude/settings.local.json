@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(xargs cat:*)",
+      "Bash(node:*)",
+      "Bash(cd D:/Documents/connect-auth && npm install framer-motion --save 2>&1 | tail -5)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X POST \"https://rkjrqorngdttbhjffmgk.supabase.co/rest/v1/leads\" \\\\\n  -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJranJxb3JuZ2R0dGJoamZmbWdrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTE2NzgyOCwiZXhwIjoyMDg2NzQzODI4fQ.JxgfgYOii5S1w4pd3n96OhTZnc7YedrIrx7ZpRsjHQ4\" \\\\\n  -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJranJxb3JuZ2R0dGJoamZmbWdrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTE2NzgyOCwiZXhwIjoyMDg2NzQzODI4fQ.JxgfgYOii5S1w4pd3n96OhTZnc7YedrIrx7ZpRsjHQ4\" \\\\\n  -H \"Content-Type: application/json\" \\\\\n  -H \"Prefer: return=minimal\" \\\\\n  -d '{\n    \"workspace_id\": \"70b7efb2-bf0a-4321-991e-80d750406ad3\",\n    \"username\": \"aliasgharm\",\n    \"inquiry_summary\": \"Interested in hydro dipping for bike visor and helmet — asking about carbon fibre finish and turnaround time\",\n    \"message\": \"hi bro can you do carbon fibre for my helmet visor how long does it take\",\n    \"lead_score\": 5,\n    \"captured_data\": {\"phone_number\": \"9876543210\", \"email\": \"ali@example.com\", \"name\": \"Ali\"},\n    \"source\": \"dm\",\n    \"status\": \"new\"\n  }')",
+      "Bash(git add:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
