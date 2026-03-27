@@ -1,0 +1,387 @@
+/* ── Overlay ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 9, 15, 0.95);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 24px 0;
+}
+
+/* ── Skip ── */
+.skip {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+  font-family: inherit;
+  z-index: 1;
+}
+.skip:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Card container ── */
+.cardWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 560px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* ── Card ── */
+.card {
+  width: 100%;
+  background: #131318;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-sizing: border-box;
+}
+
+/* ── Slide animations ── */
+@keyframes slideInRight {
+  from { transform: translateX(60px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-60px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+.slideRight { animation: slideInRight 0.3s ease; }
+.slideLeft  { animation: slideInLeft  0.3s ease; }
+
+/* ── Dot indicators ── */
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.25s ease;
+}
+.dotActive {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+}
+
+/* ── Navigation row ── */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.backBtn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.backBtn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.8);
+}
+.backBtn:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+.nextBtn {
+  background: #10b981;
+  border: none;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-left: auto;
+  font-family: inherit;
+}
+.nextBtn:hover { background: #059669; }
+
+/* ── Shared card content ── */
+.iconCircle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 10px;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin: 0 auto 20px;
+  text-align: center;
+  max-width: 420px;
+}
+
+/* ── Mini visual (all cards) — fades up after card appears ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.miniVisual {
+  background: #1a1a22;
+  border-radius: 10px;
+  padding: 16px;
+  animation: fadeInUp 0.4s ease 0.3s both;
+}
+
+.visualNote {
+  font-size: 13px;
+  color: #52525b;
+  text-align: center;
+  font-style: italic;
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+/* ── Card 1: Knowledge Base rows ── */
+.kbRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+}
+.kbRow + .kbRow {
+  border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+}
+.kbRowIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.4);
+}
+.kbRowLabel {
+  font-size: 13px;
+  color: #94a3b8;
+  flex: 1;
+}
+.kbCheck {
+  color: #10b981;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Card 2: DM chat bubbles ── */
+.chatWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bubbleCustomer {
+  align-self: flex-end;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 10px 10px 2px 10px;
+  font-size: 13px;
+  max-width: 80%;
+  line-height: 1.4;
+}
+.bubbleAgent {
+  align-self: flex-start;
+  background: rgba(59, 130, 246, 0.15);
+  color: #bfdbfe;
+  padding: 8px 12px;
+  border-radius: 10px 10px 10px 2px;
+  font-size: 13px;
+  max-width: 90%;
+  line-height: 1.4;
+}
+
+/* ── Card 3: Comment pairs ── */
+.commentPairs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.commentPair {
+  padding: 9px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.commentPair + .commentPair {
+  border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+}
+.commentOriginalRow {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+.commentUsername {
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-right: 5px;
+}
+.commentReplyRow {
+  font-size: 13px;
+  color: #c4b5fd;
+  padding-left: 12px;
+  border-left: 2px solid rgba(139, 92, 246, 0.35);
+  line-height: 1.4;
+  margin-left: 2px;
+}
+.replyUsername {
+  font-weight: 600;
+  color: #a78bfa;
+  margin-right: 5px;
+}
+
+/* ── Card 4: Leads mini table ── */
+.leadsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+.leadsTable th {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.28);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 10px 8px 0;
+  white-space: nowrap;
+}
+.leadsTable td {
+  color: #94a3b8;
+  font-size: 12px;
+  padding: 7px 10px 7px 0;
+  vertical-align: middle;
+}
+.leadsTable tr + tr td {
+  border-top: 0.5px solid rgba(255, 255, 255, 0.05);
+}
+.scoreHot {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  display: inline-block;
+}
+.scoreWarm {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* ── Card 5: Checklist ── */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.checkStep {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.stepNum {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid #10b981;
+  color: #10b981;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.stepTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f5f9;
+  line-height: 1.3;
+}
+.stepHelper {
+  font-size: 12px;
+  color: #52525b;
+  line-height: 1.4;
+}
+
+/* ── CTA button (card 5) ── */
+.ctaBtn {
+  margin-top: 24px;
+  width: 100%;
+  background: #10b981;
+  border: none;
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.ctaBtn:hover { background: #059669; }
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .card  { padding: 28px 20px; }
+  .title { font-size: 20px; }
+  .skip  { top: 16px; right: 16px; }
+}

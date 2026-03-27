@@ -1,0 +1,636 @@
+/* ── Layout ── */
+.welcome {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ── Section 1: Hero ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.heroBadgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.heroTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.heroSub {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0;
+}
+
+/* ── Section 2: Animation ── */
+.demoSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.demoRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+}
+
+.demoCard {
+  background: #131318;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  flex: 1;
+  max-width: 240px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.demoCenterCard {
+  background: #131318;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  width: 120px;
+  min-height: 120px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* DM card header */
+.dmCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dmInstagramIcon {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dmHeaderText {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+  flex: 1;
+}
+
+.dmNotifBadge {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Chat bubble */
+.dmBubble {
+  background: #1e293b;
+  border-radius: 4px 12px 12px 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.5;
+  min-height: 48px;
+  position: relative;
+}
+
+.dmCursor {
+  display: inline-block;
+  width: 2px;
+  height: 13px;
+  background: #94a3b8;
+  margin-left: 1px;
+  vertical-align: middle;
+  animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.dmTimestamp {
+  font-size: 10px;
+  color: #334155;
+  margin: 0;
+}
+
+/* Reply card header */
+.replyCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.replyCheckIcon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.replyHeaderText {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+  flex: 1;
+}
+
+.replySentBadge {
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.replyEchoBubble {
+  background: #0f172a;
+  border-radius: 4px 12px 12px 12px;
+  padding: 7px 12px;
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.replyAiBubble {
+  background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(6,182,212,0.2));
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 4px 12px 12px 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.replyInstantLabel {
+  font-size: 10px;
+  color: #10b981;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Center AI card */
+.aiIconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(6,182,212,0.2));
+  border: 1px solid rgba(16,185,129,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aiLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.3px;
+}
+
+/* Arrows between cards */
+.demoArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  flex-shrink: 0;
+  position: relative;
+  height: 32px;
+}
+
+.arrowTrack {
+  position: relative;
+  width: 40px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 1px;
+  overflow: visible;
+}
+
+.arrowHead {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #10b981;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.arrowDot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  opacity: 0;
+}
+
+/* Demo card labels */
+.demoLabels {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  margin-top: 12px;
+  padding: 0 4px;
+}
+
+.demoLabelSlot {
+  flex: 1;
+  max-width: 240px;
+  text-align: center;
+}
+
+.demoCenterLabelSlot {
+  width: 120px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.demoArrowLabelSlot {
+  width: 48px;
+  flex-shrink: 0;
+}
+
+.demoLabel {
+  font-size: 12px;
+  color: #475569;
+  margin: 0;
+}
+
+/* ── Animation state classes ── */
+
+/* Left card (message typing) */
+.demoCard.dmCard {
+  transition: box-shadow 0.3s ease;
+}
+
+.dmCard.active {
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2), 0 4px 20px rgba(16, 185, 129, 0.08);
+}
+
+/* Arrow pulse */
+.arrowDot.animating {
+  animation: dotSlide 0.5s ease-in-out forwards;
+}
+
+@keyframes dotSlide {
+  0%   { left: 0; opacity: 1; }
+  100% { left: 34px; opacity: 0; }
+}
+
+/* AI processing pulse */
+.aiIconWrap.processing {
+  animation: aiPulse 0.8s ease-in-out;
+}
+
+@keyframes aiPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  40%  { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Reply card fade+slide in */
+.replyContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.replyContent.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.replyCard.active {
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2), 0 4px 20px rgba(16, 185, 129, 0.08);
+}
+
+/* Full demo fade in/out */
+.demoSection.fadeOut .demoCard,
+.demoSection.fadeOut .demoCenterCard,
+.demoSection.fadeOut .demoArrow {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.demoSection .demoCard,
+.demoSection .demoCenterCard,
+.demoSection .demoArrow {
+  transition: opacity 0.4s ease-in, box-shadow 0.3s ease;
+}
+
+/* ── Section 3: Steps ── */
+.steps {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stepCard {
+  background: #131318;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepNum {
+  font-size: 22px;
+  font-weight: 700;
+  color: #10b981;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.stepTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.stepDesc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Section 4: Features ── */
+.features {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featuresTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.featureRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #131318;
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+.featureIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #10b981;
+}
+
+.featureText {
+  flex: 1;
+}
+
+.featureTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 2px;
+}
+
+.featureDesc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Section 5: CTA ── */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: Inter, sans-serif;
+  letter-spacing: -0.2px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.ctaBtn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.ctaBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ctaNote {
+  font-size: 12px;
+  color: #475569;
+  margin: 0;
+  text-align: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .welcome {
+    padding: 32px 16px 56px;
+    gap: 48px;
+  }
+
+  .heroTitle {
+    font-size: 22px;
+  }
+
+  .heroSub {
+    font-size: 14px;
+  }
+
+  .demoRow {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .demoCard {
+    max-width: 100%;
+    min-height: unset;
+  }
+
+  .demoCenterCard {
+    width: 100%;
+    flex-direction: row;
+    min-height: unset;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .demoArrow {
+    width: 100%;
+    height: 32px;
+    justify-content: center;
+  }
+
+  .arrowTrack {
+    width: 2px;
+    height: 28px;
+  }
+
+  .arrowHead {
+    right: unset;
+    top: unset;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+  }
+
+  .arrowDot {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+
+  @keyframes dotSlide {
+    0%   { top: 0; left: 50%; opacity: 1; }
+    100% { top: 22px; left: 50%; opacity: 0; }
+  }
+
+  .demoLabels {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .demoLabelSlot,
+  .demoCenterLabelSlot {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .demoArrowLabelSlot {
+    display: none;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaBtn {
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+  }
+}

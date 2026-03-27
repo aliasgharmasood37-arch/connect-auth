@@ -1,0 +1,234 @@
+/* ── Overlay ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 60;
+}
+
+/* ── Panel ── */
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  background: #0e0e14;
+  border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+  z-index: 61;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.panelOpen {
+  transform: translateX(0);
+}
+
+/* ── Panel header ── */
+.panelHeader {
+  padding: 20px 20px 16px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.panelTitleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.panelTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.panelClose {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.panelClose:hover {
+  color: #e2e8f0;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.panelSubtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── First-time welcome banner ── */
+.welcomeBanner {
+  margin: 16px 20px 0;
+  padding: 12px 14px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 10px;
+  font-size: 13px;
+  color: #34d399;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.welcomeBannerIcon {
+  margin-right: 6px;
+}
+
+/* ── Scrollable body ── */
+.panelBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0 32px;
+}
+
+.panelBody::-webkit-scrollbar {
+  width: 4px;
+}
+
+.panelBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.panelBody::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+/* ── Accordion section ── */
+.section {
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+}
+
+.sectionBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: Inter, sans-serif;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.sectionBtn:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #f1f5f9;
+  line-height: 1.3;
+}
+
+.chevron {
+  color: #475569;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Section body ── */
+.sectionBody {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease;
+}
+
+.sectionBodyOpen {
+  max-height: 600px;
+}
+
+.sectionContent {
+  padding: 0 20px 16px;
+}
+
+.sectionContent p {
+  font-size: 13px;
+  color: #a1a1aa;
+  line-height: 1.7;
+  margin: 0 0 8px;
+}
+
+.sectionContent p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Help button (sidebar) ── */
+.helpBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s, color 0.15s;
+  margin-top: auto;
+}
+
+.helpBtn:hover {
+  background: #1e293b;
+  color: #94a3b8;
+}
+
+/* ── Help icon button (mobile header) ── */
+.helpIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.helpIconBtn:hover {
+  color: #94a3b8;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .panel {
+    width: 100%;
+  }
+}

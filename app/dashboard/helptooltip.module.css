@@ -1,0 +1,142 @@
+/* Wrapper — just an inline anchor for the button */
+.wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* The ? icon button */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.28);
+  transition: color 0.15s;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: rgba(255, 255, 255, 0.55);
+  outline: none;
+}
+
+/* ── Tooltip — position: fixed, coordinates set by JS ── */
+.tooltip {
+  position: fixed;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: #1a1a22;
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 14px 16px;
+  z-index: 9999;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  animation: htFadeIn 0.15s ease;
+  /* visibility toggled by inline style until position is calculated */
+}
+
+/* ── Arrows — left is overridden by inline style ── */
+
+/* Up-pointing (tooltip below icon) */
+.arrow {
+  position: absolute;
+  top: -5px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid rgba(255, 255, 255, 0.12);
+}
+
+.arrow::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #1a1a22;
+}
+
+/* Down-pointing (tooltip above icon) */
+.arrowAbove {
+  position: absolute;
+  bottom: -5px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(255, 255, 255, 0.12);
+}
+
+.arrowAbove::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #1a1a22;
+}
+
+@keyframes htFadeIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Tooltip title ── */
+.tipTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0 0 8px;
+  letter-spacing: 0.2px;
+}
+
+/* ── Tooltip body ── */
+.content {
+  font-size: 13px;
+  color: #a1a1aa;
+  line-height: 1.6;
+}
+
+.content p {
+  margin: 0 0 7px;
+}
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+.content ul {
+  margin: 2px 0 0;
+  padding-left: 15px;
+}
+
+.content li {
+  margin-bottom: 4px;
+}
+
+.content li:last-child {
+  margin-bottom: 0;
+}
+
+.content strong {
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.content em {
+  font-style: italic;
+}
