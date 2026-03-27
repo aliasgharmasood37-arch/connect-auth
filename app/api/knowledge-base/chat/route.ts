@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 const KB_ASSISTANT_SYSTEM = `You are a knowledge base optimization assistant for an Instagram DM automation tool. The business owner will ask you questions about their AI agent's performance or their knowledge base.
 
@@ -23,6 +24,11 @@ type ChatMessage = { role: "user" | "assistant"; content: string };
 export async function POST(req: NextRequest) {
   const auth = await requireAuth(req);
   if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
+
+  // 20 requests per minute per user
+  if (!checkRateLimit(`kb-chat:${auth.userId}`, 20, 60_000)) {
+    return NextResponse.json({ error: "Too many requests. Please slow down." }, { status: 429 });
+  }
 
   const body = await req.json().catch(() => null);
   if (!body || typeof body.message !== "string") {

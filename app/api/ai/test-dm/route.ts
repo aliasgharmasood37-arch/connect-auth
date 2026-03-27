@@ -6,11 +6,17 @@ import { requireAuth } from "@/lib/auth";
 import { getSupabaseServerClientWithAuth } from "@/lib/supabaseServer";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { waitForReply } from "@/lib/testDmStore";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
   const auth = await requireAuth(req);
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+
+  // 10 requests per minute per user
+  if (!checkRateLimit(`test-dm:${auth.userId}`, 10, 60_000)) {
+    return NextResponse.json({ error: "Too many requests. Please slow down." }, { status: 429 });
   }
 
   const body = await req.json().catch(() => null);
