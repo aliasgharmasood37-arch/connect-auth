@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import styles from "./layout.module.css";
 import guideStyles from "./guide.module.css";
@@ -45,13 +45,12 @@ const NAV = [
   },
 ];
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [missingReelCount, setMissingReelCount] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const [guideOpen, setGuideOpen] = useState(false);
-  const [guideFirstTime, setGuideFirstTime] = useState(false);
 
   const isActive = (href: string) =>
     href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
@@ -95,7 +94,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         )}
         <button
           className={guideStyles.helpIconBtn}
-          onClick={() => { setGuideFirstTime(false); setGuideOpen(true); }}
+          onClick={() => setGuideOpen(true)}
           aria-label="Open help guide"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -142,7 +141,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         <button
           className={guideStyles.helpBtn}
-          onClick={() => { setDrawerOpen(false); setGuideFirstTime(false); setGuideOpen(true); }}
+          onClick={() => { setDrawerOpen(false); setGuideOpen(true); }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="12" r="10" />
@@ -157,7 +156,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <UserGuide
         open={guideOpen}
-        firstTime={guideFirstTime}
+        firstTime={false}
         onClose={() => setGuideOpen(false)}
       />
     </div>

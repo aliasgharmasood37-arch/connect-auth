@@ -1067,7 +1067,7 @@ export default function KnowledgeBasePage() {
                   />
                   <button
                     className={styles.sendBtn}
-                    onClick={sendAssistantMessage}
+                    onClick={() => sendAssistantMessage()}
                     disabled={assistantSending || !assistantInput.trim()}
                   >
                     Send
