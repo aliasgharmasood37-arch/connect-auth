@@ -81,7 +81,8 @@ export async function GET(req: NextRequest) {
 
     // Fetch IG account info
     const profileRes = await fetch(
-      `https://graph.instagram.com/me?fields=id,username&access_token=${longToken}`
+      "https://graph.instagram.com/me?fields=id,username",
+      { headers: { Authorization: `Bearer ${longToken}` } }
     );
 
     if (!profileRes.ok) {

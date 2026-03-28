@@ -54,11 +54,12 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const secret = process.env.N8N_LEADS_SECRET;
-  if (secret) {
-    const incoming = req.headers.get("x-leads-secret");
-    if (incoming !== secret) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  if (!secret) {
+    return NextResponse.json({ error: "Leads endpoint not configured" }, { status: 503 });
+  }
+  const incoming = req.headers.get("x-leads-secret");
+  if (incoming !== secret) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await req.json().catch(() => null);

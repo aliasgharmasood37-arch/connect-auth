@@ -9,11 +9,12 @@ import { resolveReply } from "@/lib/testDmStore";
  */
 export async function POST(req: NextRequest) {
   const secret = process.env.N8N_WEBHOOK_SECRET;
-  if (secret) {
-    const incoming = req.headers.get("x-webhook-secret");
-    if (incoming !== secret) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+  if (!secret) {
+    return NextResponse.json({ error: "Webhook endpoint not configured" }, { status: 503 });
+  }
+  const incoming = req.headers.get("x-webhook-secret");
+  if (incoming !== secret) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await req.json().catch(() => null);

@@ -3,12 +3,17 @@ import { requireAuth } from "@/lib/auth";
 import { getSupabaseServerClientWithAuth } from "@/lib/supabaseServer";
 
 const SHORTCODE_RE = /(?:reel|p)\/([^\/\?]+)/;
+const INSTAGRAM_URL_RE = /^https:\/\/(www\.)?instagram\.com\//;
 
 function extractShortcodes(urls: string[]): string[] {
   return urls.flatMap((url) => {
     const m = SHORTCODE_RE.exec(url);
     return m ? [m[1]] : [];
   });
+}
+
+function validateReelUrls(urls: string[]): boolean {
+  return urls.every((url) => typeof url === "string" && INSTAGRAM_URL_RE.test(url));
 }
 
 // ── GET /api/comment-trigger-keywords ─────────────────────────────────────
@@ -76,7 +81,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
   }
 
-  const reelUrls: string[] = body.reelUrls ?? [];
+  const reelUrls: string[] = Array.isArray(body.reelUrls) ? body.reelUrls : [];
+  if (reelUrls.length > 0 && !validateReelUrls(reelUrls)) {
+    return NextResponse.json({ error: "Invalid reel URL" }, { status: 400 });
+  }
 
   const { data: keyword, error } = await supabase
     .from("trigger_keywords")

@@ -41,6 +41,13 @@ export async function POST(req: NextRequest) {
     onboardingAnswers: Record<string, unknown>;
   };
 
+  if (message.length > 2000) {
+    return NextResponse.json({ error: "Message too long" }, { status: 400 });
+  }
+  if (!Array.isArray(history) || history.length > 40) {
+    return NextResponse.json({ error: "History too large" }, { status: 400 });
+  }
+
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return NextResponse.json({ error: "AI not configured" }, { status: 500 });
 

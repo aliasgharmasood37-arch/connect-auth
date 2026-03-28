@@ -3,12 +3,17 @@ import { requireAuth } from "@/lib/auth";
 import { getSupabaseServerClientWithAuth } from "@/lib/supabaseServer";
 
 const SHORTCODE_RE = /(?:reel|p)\/([^\/\?]+)/;
+const INSTAGRAM_URL_RE = /^https:\/\/(www\.)?instagram\.com\//;
 
 function extractShortcodes(urls: string[]): string[] {
   return urls.flatMap((url) => {
     const m = SHORTCODE_RE.exec(url);
     return m ? [m[1]] : [];
   });
+}
+
+function validateReelUrls(urls: string[]): boolean {
+  return urls.every((url) => typeof url === "string" && INSTAGRAM_URL_RE.test(url));
 }
 
 // ── DELETE /api/comment-trigger-keywords/:id ──────────────────────────────
@@ -71,6 +76,9 @@ export async function PATCH(
   if (typeof body.replyMessage === "string") updates.reply_message = body.replyMessage.trim();
   if (body.scope === "all" || body.scope === "specific") updates.scope = body.scope;
   if (Array.isArray(body.reelUrls)) {
+    if (body.reelUrls.length > 0 && !validateReelUrls(body.reelUrls as string[])) {
+      return NextResponse.json({ error: "Invalid reel URL" }, { status: 400 });
+    }
     updates.reel_urls = body.reelUrls;
     updates.reel_shortcodes = extractShortcodes(body.reelUrls as string[]);
   }
