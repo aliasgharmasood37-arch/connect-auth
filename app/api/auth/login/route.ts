@@ -11,7 +11,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
   }
 
-  const origin = process.env.BASE_URL || req.nextUrl.origin;
+  const baseUrl = process.env.BASE_URL;
+  if (!baseUrl) {
+    return NextResponse.json({ error: "BASE_URL is not configured" }, { status: 500 });
+  }
+  const origin = baseUrl.replace(/\/$/, "");
   console.log("Redirect URI being sent:", `${origin}/api/auth/callback`);
   const state = crypto.randomUUID();
   const cookieStore = await cookies();

@@ -31,16 +31,15 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const origin = process.env.BASE_URL || req.nextUrl.origin;
+    const origin = (process.env.BASE_URL || req.nextUrl.origin).replace(/\/$/, "");
 
-    // Exchange for short-lived token
+    // Step 1 — Exchange code for short-lived token
+    console.log("[callback] Step 1: exchanging code for short-lived token, redirect_uri:", `${origin}/api/auth/callback`);
     const shortTokenRes = await fetch(
       "https://api.instagram.com/oauth/access_token",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           client_id: process.env.INSTAGRAM_APP_ID!,
           client_secret: process.env.INSTAGRAM_APP_SECRET!,
@@ -51,29 +50,36 @@ export async function GET(req: NextRequest) {
       }
     );
 
+    const shortBody = await shortTokenRes.text();
+    console.log("[callback] Step 1 response", shortTokenRes.status, shortBody);
+
     if (!shortTokenRes.ok) {
       throw new Error("Short token exchange failed");
     }
 
-    const shortData = await shortTokenRes.json();
+    const shortData = JSON.parse(shortBody);
 
     if (!shortData.access_token) {
-      throw new Error("Short token exchange failed");
+      throw new Error("Short token exchange failed: no access_token in response");
     }
 
-    // Exchange for long-lived token
+    // Step 2 — Exchange short-lived for long-lived token
+    console.log("[callback] Step 2: exchanging for long-lived token (secrets redacted)");
     const longTokenRes = await fetch(
-      `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${process.env.INSTAGRAM_APP_SECRET}&access_token=${shortData.access_token}`
+      `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${process.env.INSTAGRAM_APP_SECRET}&access_token=${shortData.access_token}`,
+      { method: "GET" }
     );
+
+    const longBody = await longTokenRes.text();
+    const longData = JSON.parse(longBody);
+    console.log("Long token exchange response:", JSON.stringify(longData));
 
     if (!longTokenRes.ok) {
       throw new Error("Long token exchange failed");
     }
 
-    const longData = await longTokenRes.json();
-
     if (!longData.access_token) {
-      throw new Error("Long token exchange failed");
+      throw new Error("Long token exchange failed: no access_token in response");
     }
 
     const longToken = longData.access_token;
