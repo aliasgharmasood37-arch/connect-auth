@@ -88,21 +88,41 @@ export default function LoginPage() {
   };
 
   if (authChecking) {
-    return <main style={s.page} className="login-page" />;
+    return <div style={{ minHeight: "100vh", background: "#0f172a" }} />;
   }
 
   return (
     <main style={s.page} className="login-page">
       <style>{`
+        @keyframes floatA {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-18px) scale(1.04); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(14px) scale(0.97); }
+        }
+
         /* ── Mobile-only elements hidden on desktop ── */
         .login-mobile-header,
         .login-mobile-features {
           display: none;
         }
+        /* Left panel hidden on mobile */
+        .login-left-panel {
+          display: flex;
+        }
 
         @media (max-width: 768px) {
-          /* Page — flex column so branding/card/features stack */
-          .login-page {
+          /* Left panel gone on mobile */
+          .login-left-panel {
+            display: none !important;
+          }
+
+          /* Right panel becomes the full page */
+          .login-right-panel {
+            flex: 1 !important;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -136,7 +156,7 @@ export default function LoginPage() {
             margin: 0 !important;
           }
 
-          /* Hide in-card brand (shown above the card instead) */
+          /* Hide in-card brand on mobile (shown above instead) */
           .login-brand {
             display: none !important;
           }
@@ -177,130 +197,278 @@ export default function LoginPage() {
         }
       `}</style>
 
-      {/* Mobile-only branding above card */}
-      <div className="login-mobile-header">
-        <div className="login-mobile-brand">
-          <div style={s.brandIcon}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none" />
-            </svg>
+      {/* ── Left panel (desktop only) ── */}
+      <div style={s.leftPanel} className="login-left-panel">
+        {/* Animated background orbs */}
+        <div style={{ ...s.orb, ...s.orbA }} />
+        <div style={{ ...s.orb, ...s.orbB }} />
+
+        <div style={s.leftContent}>
+          <div style={s.leftBrand}>
+            <div style={s.brandIcon}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none" />
+              </svg>
+            </div>
+            <span style={s.leftBrandName}>InstaAutomate</span>
           </div>
-          <span className="login-mobile-brand-name">InstaAutomate</span>
+
+          <h2 style={s.leftHeading}>
+            Your Instagram,<br />on autopilot.
+          </h2>
+          <p style={s.leftSub}>
+            AI replies to every DM and comment while you focus on what matters.
+          </p>
+
+          <ul style={s.featureList}>
+            {[
+              "AI-powered DM replies 24/7",
+              "Auto-reply to comments",
+              "Lead capture & scoring",
+              "Train your own knowledge base",
+            ].map((f) => (
+              <li key={f} style={s.featureItem}>
+                <span style={s.featureCheck}>
+                  <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                    <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
-        <p className="login-mobile-tagline">AI-powered DM &amp; comment automation for Instagram</p>
       </div>
 
-      <div style={s.card} className="login-card">
-        {/* Brand — visible on desktop, hidden on mobile (shown above instead) */}
-        <div style={s.brand} className="login-brand">
-          <div style={s.brandIcon}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none" />
-            </svg>
+      {/* ── Right panel (form) ── */}
+      <div style={s.rightPanel} className="login-right-panel">
+        {/* Mobile-only branding above card */}
+        <div className="login-mobile-header">
+          <div className="login-mobile-brand">
+            <div style={s.brandIcon}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none" />
+              </svg>
+            </div>
+            <span className="login-mobile-brand-name">InstaAutomate</span>
           </div>
-          <span style={s.brandName} className="login-brand-name">InstaAutomate</span>
+          <p className="login-mobile-tagline">AI-powered DM &amp; comment automation for Instagram</p>
         </div>
 
-        <h1 style={s.heading} className="login-heading">
-          {mode === "signin" ? "Welcome back" : "Create your account"}
-        </h1>
-        <p style={s.subheading} className="login-subheading">
-          {mode === "signin"
-            ? "Sign in to manage your Instagram automations."
-            : "Get started with AI-powered Instagram automation."}
-        </p>
+        <div style={s.card} className="login-card">
+          {/* Brand row inside card — visible on desktop, hidden on mobile */}
+          <div style={s.brand} className="login-brand">
+            <div style={s.brandIcon}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="white" stroke="none" />
+              </svg>
+            </div>
+            <span style={s.brandName} className="login-brand-name">InstaAutomate</span>
+          </div>
 
-        {/* Tab toggle */}
-        <div style={s.tabs} className="login-tabs">
-          <button
-            type="button"
-            style={mode === "signin" ? s.tabActive : s.tabInactive}
-            className={`login-tab${mode === "signin" ? " login-tab-active" : ""}`}
-            onClick={() => switchMode("signin")}
-          >
-            Sign in
-          </button>
-          <button
-            type="button"
-            style={mode === "signup" ? s.tabActive : s.tabInactive}
-            className={`login-tab${mode === "signup" ? " login-tab-active" : ""}`}
-            onClick={() => switchMode("signup")}
-          >
-            Create account
-          </button>
+          <h1 style={s.heading} className="login-heading">
+            {mode === "signin" ? "Welcome back" : "Create your account"}
+          </h1>
+          <p style={s.subheading} className="login-subheading">
+            {mode === "signin"
+              ? "Sign in to manage your Instagram automations."
+              : "Get started with AI-powered Instagram automation."}
+          </p>
+
+          {/* Tab toggle */}
+          <div style={s.tabs} className="login-tabs">
+            <button
+              type="button"
+              style={mode === "signin" ? s.tabActive : s.tabInactive}
+              className={`login-tab${mode === "signin" ? " login-tab-active" : ""}`}
+              onClick={() => switchMode("signin")}
+            >
+              Sign in
+            </button>
+            <button
+              type="button"
+              style={mode === "signup" ? s.tabActive : s.tabInactive}
+              className={`login-tab${mode === "signup" ? " login-tab-active" : ""}`}
+              onClick={() => switchMode("signup")}
+            >
+              Create account
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} style={s.form} noValidate>
+            <label style={s.label}>
+              <span style={s.labelText} className="login-label-text">Email</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                autoComplete="email"
+                required
+                style={s.input}
+                className="login-input"
+              />
+            </label>
+
+            <label style={s.label}>
+              <span style={s.labelText} className="login-label-text">Password</span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                required
+                style={s.input}
+                className="login-input"
+              />
+            </label>
+
+            {error && <p style={s.errorMsg}>{error}</p>}
+            {info && <p style={s.infoMsg}>{info}</p>}
+
+            <button type="submit" disabled={loading} style={s.submitBtn} className="login-submit">
+              {loading
+                ? mode === "signin" ? "Signing in..." : "Creating account..."
+                : mode === "signin" ? "Sign in" : "Create account"}
+            </button>
+          </form>
+
+          <p style={s.switchText} className="login-switch-text">
+            {mode === "signin" ? "Don't have an account? " : "Already have an account? "}
+            <button
+              type="button"
+              style={s.switchLink}
+              className="login-switch-link"
+              onClick={() => switchMode(mode === "signin" ? "signup" : "signin")}
+            >
+              {mode === "signin" ? "Create one" : "Sign in"}
+            </button>
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={s.form} noValidate>
-          <label style={s.label}>
-            <span style={s.labelText} className="login-label-text">Email</span>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              autoComplete="email"
-              required
-              style={s.input}
-              className="login-input"
-            />
-          </label>
-
-          <label style={s.label}>
-            <span style={s.labelText} className="login-label-text">Password</span>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              required
-              style={s.input}
-              className="login-input"
-            />
-          </label>
-
-          {error && <p style={s.errorMsg}>{error}</p>}
-          {info && <p style={s.infoMsg}>{info}</p>}
-
-          <button type="submit" disabled={loading} style={s.submitBtn} className="login-submit">
-            {loading
-              ? mode === "signin" ? "Signing in..." : "Creating account..."
-              : mode === "signin" ? "Sign in" : "Create account"}
-          </button>
-        </form>
-
-        <p style={s.switchText} className="login-switch-text">
-          {mode === "signin" ? "Don't have an account? " : "Already have an account? "}
-          <button
-            type="button"
-            style={s.switchLink}
-            className="login-switch-link"
-            onClick={() => switchMode(mode === "signin" ? "signup" : "signin")}
-          >
-            {mode === "signin" ? "Create one" : "Sign in"}
-          </button>
+        {/* Mobile-only feature bullets below card */}
+        <p className="login-mobile-features">
+          AI DM Replies&nbsp;&bull;&nbsp;Auto Comments&nbsp;&bull;&nbsp;Lead Capture
         </p>
       </div>
-
-      {/* Mobile-only feature bullets below card */}
-      <p className="login-mobile-features">
-        AI DM Replies&nbsp;&bull;&nbsp;Auto Comments&nbsp;&bull;&nbsp;Lead Capture
-      </p>
     </main>
   );
 }
 
 const s: Record<string, React.CSSProperties> = {
+  /* ── Outer shell ── */
   page: {
+    display: "flex",
     minHeight: "100vh",
-    display: "grid",
-    placeItems: "center",
-    padding: "24px",
-    background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+  },
+
+  /* ── Left dark panel ── */
+  leftPanel: {
+    flex: "0 0 52%",
+    position: "relative",
+    background: "linear-gradient(160deg, #0c1120 0%, #0f172a 45%, #1a1035 100%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "60px 56px",
+    overflow: "hidden",
+  },
+  orb: {
+    position: "absolute",
+    borderRadius: "50%",
+    filter: "blur(72px)",
+    pointerEvents: "none",
+  },
+  orbA: {
+    width: "340px",
+    height: "340px",
+    background: "radial-gradient(circle, rgba(131,58,180,0.35) 0%, transparent 70%)",
+    top: "-60px",
+    right: "-40px",
+    animation: "floatA 7s ease-in-out infinite",
+  },
+  orbB: {
+    width: "280px",
+    height: "280px",
+    background: "radial-gradient(circle, rgba(253,29,29,0.2) 0%, transparent 70%)",
+    bottom: "40px",
+    left: "20px",
+    animation: "floatB 9s ease-in-out infinite",
+  },
+  leftContent: {
+    position: "relative",
+    zIndex: 1,
+    maxWidth: "380px",
+  },
+  leftBrand: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    marginBottom: "48px",
+  },
+  leftBrandName: {
+    fontWeight: "700",
+    fontSize: "16px",
+    color: "#f1f5f9",
+    letterSpacing: "-0.2px",
+  },
+  leftHeading: {
+    margin: "0 0 16px",
+    fontSize: "36px",
+    fontWeight: "800",
+    color: "#ffffff",
+    lineHeight: "1.18",
+    letterSpacing: "-0.8px",
+  },
+  leftSub: {
+    margin: "0 0 40px",
+    fontSize: "15px",
+    color: "rgba(255,255,255,0.5)",
+    lineHeight: "1.6",
+  },
+  featureList: {
+    listStyle: "none",
+    margin: "0",
+    padding: "0",
+    display: "flex",
+    flexDirection: "column",
+    gap: "14px",
+  },
+  featureItem: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    fontSize: "14px",
+    color: "rgba(255,255,255,0.75)",
+    fontWeight: "500",
+  },
+  featureCheck: {
+    width: "22px",
+    height: "22px",
+    borderRadius: "50%",
+    background: "linear-gradient(135deg, #833ab4, #fd1d1d)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+  },
+
+  /* ── Right form panel ── */
+  rightPanel: {
+    flex: 1,
+    background: "#f8fafc",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "48px 40px",
   },
   card: {
     width: "100%",
@@ -308,7 +476,7 @@ const s: Record<string, React.CSSProperties> = {
     background: "#ffffff",
     borderRadius: "16px",
     padding: "36px 32px",
-    boxShadow: "0 24px 60px rgba(0,0,0,0.3)",
+    boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
   },
   brand: {
     display: "flex",
@@ -324,6 +492,7 @@ const s: Record<string, React.CSSProperties> = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    flexShrink: 0,
   },
   brandName: {
     fontWeight: "700",
