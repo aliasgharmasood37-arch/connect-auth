@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, type ReactNode } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import styles from "./layout.module.css";
@@ -47,6 +47,8 @@ const NAV = [
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [authChecking, setAuthChecking] = useState(true);
   const [missingReelCount, setMissingReelCount] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
@@ -57,22 +59,39 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) return;
-      fetch("/api/reel-context?missing=true", {
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      })
-        .then((r) => r.json())
-        .then((data) => setMissingReelCount(data.reels?.length ?? 0))
-        .catch(() => {});
-      fetch("/api/dashboard", {
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      })
-        .then((r) => r.json())
-        .then((data) => setUsername(data.workspace?.username ?? null))
-        .catch(() => {});
+
+    supabase.auth.getUser().then(({ data: { user }, error }) => {
+      if (!user || error) {
+        router.replace("/login");
+        return;
+      }
+      setAuthChecking(false);
+
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session) return;
+        fetch("/api/reel-context?missing=true", {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        })
+          .then((r) => r.json())
+          .then((data) => setMissingReelCount(data.reels?.length ?? 0))
+          .catch(() => {});
+        fetch("/api/dashboard", {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        })
+          .then((r) => r.json())
+          .then((data) => setUsername(data.workspace?.username ?? null))
+          .catch(() => {});
+      });
     });
-  }, []);
+  }, [router]);
+
+  if (authChecking) {
+    return (
+      <div className={styles.authLoading}>
+        <div className={styles.authSpinner} />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.layout}>

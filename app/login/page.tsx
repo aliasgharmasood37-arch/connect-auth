@@ -10,6 +10,7 @@ export default function LoginPage() {
   const router = useRouter();
   const supabase = getSupabaseBrowserClient();
 
+  const [authChecking, setAuthChecking] = useState(true);
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,8 +19,12 @@ export default function LoginPage() {
   const [info, setInfo] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.replace("/dashboard");
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        router.replace("/dashboard");
+      } else {
+        setAuthChecking(false);
+      }
     });
   }, [router, supabase.auth]);
 
@@ -81,6 +86,10 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  if (authChecking) {
+    return <main style={s.page} className="login-page" />;
+  }
 
   return (
     <main style={s.page} className="login-page">
